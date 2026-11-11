@@ -1,0 +1,198 @@
+# =====================================================================
+#  TE DIVINA - Configuración del video
+#  Edita este archivo para hacer videos nuevos SIN tocar el código.
+#  Reglas: respeta los espacios al inicio de cada línea y pon los textos
+#  entre comillas "así".
+# =====================================================================
+
+# --- Datos del negocio ------------------------------------------------
+negocio: "Te Divina"
+whatsapp: "XX XXXX XXXX"        # <- Pon aquí el número real
+
+# --- Archivo de salida -----------------------------------------------
+salida: "salida/te_divina_prototipo.mp4"
+
+# --- Formato del video (no hace falta cambiarlo) ----------------------
+video:
+  ancho: 1080
+  alto: 1920
+  fps: 30
+  duracion_minima: 35           # segundos
+  duracion_maxima: 40           # segundos
+  transicion: 0.4               # segundos de transición entre escenas
+
+# --- Colores de marca -------------------------------------------------
+colores:
+  morado: "#7B2D5B"             # morado jamaica
+  rosa: "#F6D6E3"               # rosa claro
+  crema: "#FFF8F0"              # crema
+  verde_whatsapp: "#25D366"
+
+# --- Fuente -----------------------------------------------------------
+# Se busca la primera que esté instalada en tu computadora.
+# También puedes poner un archivo .ttf en la carpeta "fuentes/".
+fuentes_preferidas:
+  - "Nunito"
+  - "Quicksand"
+  - "Fredoka"
+  - "Baloo 2"
+  - "Varela Round"
+  - "Comfortaa"
+  - "Arial Rounded MT Bold"
+  - "Segoe UI"
+  - "Verdana"
+  - "DejaVu Sans"
+
+# --- Voz ----------------------------------------------------------------
+voz:
+  # Opción A: voz generada (necesita internet)
+  nombre: "es-MX-DaliaNeural"
+  velocidad: "+0%"              # natural. Ej. "+5%" más rápido, "-5%" más lento
+  # Opción B: si existe este archivo, se usa en lugar de la voz generada
+  grabada: "audio/narracion.mp3"
+  # Solo para la voz grabada: segundo en que empieza cada escena dentro
+  # de narracion.mp3. Si lo dejas vacío [], se detectan las pausas solas.
+  # Ejemplo: [0, 4.8, 11.5, 18.9, 26.2, 33.4]
+  cortes_grabada: []
+
+# --- Música de fondo (opcional) --------------------------------------
+musica:
+  archivo: "audio/musica.mp3"   # si no existe, el video va sin música
+  volumen: 0.12                 # 0.10 a 0.15 = suave debajo de la voz
+  fade_out: 2.5                 # segundos de desvanecido al final
+
+# --- Leyenda legal ----------------------------------------------------
+leyenda:
+  texto: "Este producto no es un medicamento."
+  escenas: [6]                  # en qué escenas aparece (ej. [1,2,3,4,5,6])
+
+# =====================================================================
+#  GUION
+#  Cada escena tiene:
+#   narracion: lo que dice la voz (también se usa como subtítulo)
+#   texto:     frase grande en pantalla (máximo 5 palabras)
+#   elementos: imágenes PNG de la carpeta "imagenes/"
+#
+#  Opciones de cada imagen:
+#   animacion: rebote | deslizar_izquierda | deslizar_derecha | zoom |
+#              aparecer | caer | transformar
+#   x, y:      posición del centro (0 = izquierda/arriba, 1 = derecha/abajo)
+#   ancho:     tamaño (fracción del ancho del video, 0.5 = la mitad)
+#   inicio:    segundos después de que empieza la escena, o
+#              una palabra de la narración: inicio: {palabra: "canela"}
+#   salida:    (opcional) segundos o {palabra: ...} en que la imagen se va
+#   atras:     (opcional) true = se dibuja detrás de las demás imágenes
+#   alto_max:  (opcional) altura máxima (fracción del alto del video, 0.34)
+#  Solo para "transformar":
+#   imagen_final: imagen en la que se convierte
+#   cambio:       cuándo se convierte (segundos o {palabra: ...})
+#  Solo para "caer":
+#   desde_y: altura desde la que cae (0 = arriba)
+# =====================================================================
+escenas:
+  - narracion: "¿Ya te tomaste un ratito para ti hoy?"
+    texto: "Un ratito para ti"
+    elementos:
+      - imagen: "taza.png"
+        animacion: rebote
+        x: 0.5
+        y: 0.50
+        ancho: 0.62
+        inicio: 0.1
+
+  - narracion: "En Te Divina preparamos tés con ingredientes que conoces: jamaica, canela y un toque de manzanilla."
+    texto: "Ingredientes que conoces"
+    elementos:
+      - imagen: "jamaica.png"
+        animacion: deslizar_izquierda
+        x: 0.27
+        y: 0.44
+        ancho: 0.40
+        inicio: {palabra: "jamaica"}
+      - imagen: "canela.png"
+        animacion: deslizar_derecha
+        x: 0.73
+        y: 0.48
+        ancho: 0.40
+        inicio: {palabra: "canela"}
+      - imagen: "manzanilla.png"
+        animacion: deslizar_izquierda
+        x: 0.5
+        y: 0.585
+        ancho: 0.36
+        inicio: {palabra: "manzanilla"}
+
+  - narracion: "Sin complicaciones: pones una bolsita en agua caliente, esperas cinco minutos y listo."
+    texto: "5 minutos y listo"
+    elementos:
+      - imagen: "taza.png"
+        animacion: aparecer
+        x: 0.40
+        y: 0.56
+        ancho: 0.52
+        inicio: 0.0
+      - imagen: "bolsita.png"
+        animacion: caer
+        x: 0.40
+        y: 0.42
+        desde_y: 0.12
+        ancho: 0.22
+        inicio: {palabra: "bolsita"}
+        atras: true
+      - imagen: "reloj.png"
+        animacion: rebote
+        x: 0.76
+        y: 0.42
+        ancho: 0.30
+        inicio: {palabra: "esperas"}
+
+  - narracion: "Calientito en la mañana o con hielo por la tarde. Tú decides cómo disfrutarlo."
+    texto: "Caliente o frío"
+    elementos:
+      - imagen: "taza.png"
+        animacion: transformar
+        imagen_final: "vaso_hielo.png"
+        cambio: {palabra: "hielo"}
+        x: 0.5
+        y: 0.50
+        ancho: 0.60
+        inicio: 0.0
+
+  - narracion: "Acompáñalo con buena comida, agua y movimiento, porque sentirte bien se construye todos los días."
+    texto: "Hábitos que suman"
+    elementos:
+      - imagen: "comida.png"
+        animacion: zoom
+        x: 0.28
+        y: 0.43
+        ancho: 0.40
+        inicio: {palabra: "comida"}
+      - imagen: "agua.png"
+        animacion: zoom
+        x: 0.73
+        y: 0.45
+        ancho: 0.34
+        inicio: {palabra: "agua"}
+      - imagen: "tenis.png"
+        animacion: zoom
+        x: 0.5
+        y: 0.60
+        ancho: 0.40
+        inicio: {palabra: "movimiento"}
+
+  - narracion: "Pide el tuyo por WhatsApp. Te Divina, un momento para ti."
+    texto: "Pide el tuyo por WhatsApp"
+    mostrar_whatsapp: true      # muestra el número debajo del texto
+    elementos:
+      - imagen: "logo.png"
+        animacion: rebote
+        x: 0.5
+        y: 0.445
+        ancho: 0.34
+        inicio: 0.1
+      - imagen: "paquete.png"
+        animacion: zoom
+        x: 0.5
+        y: 0.62
+        ancho: 0.32
+        inicio: 0.5
